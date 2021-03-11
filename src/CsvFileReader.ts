@@ -1,14 +1,9 @@
 import fs from 'fs';
 
-// Generic type used to allow for variable data type to be passed to the class as the data type
-// - think function arguments
-// :  <T>
+export class CsvFileReader {
+    data: string[][] = [];
 
-export abstract class CsvFileReader<T> {
-    data: T[] = [];
-
-    abstract mapRow(row: string[]): T;
-    abstract path: string;
+    constructor(public path: string) {}
 
     read(): void {
         this.data = fs
@@ -18,7 +13,6 @@ export abstract class CsvFileReader<T> {
             .split('\n')
             .map((line: string): string[] => {
                 return line.split(',');
-            })
-            .map(this.mapRow);
+            });
     }
 }
